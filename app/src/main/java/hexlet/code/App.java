@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.schema.StringSchema;
+
 public class App {
 
     public static void main(String[] args) {
