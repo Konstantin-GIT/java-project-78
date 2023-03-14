@@ -1,7 +1,7 @@
 package hexlet.code;
 
-import hexlet.code.schema.BaseSchema;
-import hexlet.code.schema.MapSchema;
+import hexlet.code.schemas.BaseSchema;
+import hexlet.code.schemas.MapSchema;
 import java.util.HashMap;
 import java.util.Map;
 
