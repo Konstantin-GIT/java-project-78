@@ -25,7 +25,8 @@ public class NumberSchema extends BaseSchema {
     public NumberSchema range(int beginInterval, int endInterval) {
         getConditions().remove("initCondition");
         getConditions().put("rangeCondition", (item) ->
-                item == null ? false : (item instanceof Number) && ((Number) item).longValue() >= beginInterval
+                item == null ? false : (item instanceof Number)
+                        && ((Number) item).longValue() >= beginInterval
                         && ((Number) item).longValue() <= endInterval);
         return this;
     }
