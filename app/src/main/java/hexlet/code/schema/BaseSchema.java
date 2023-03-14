@@ -10,13 +10,13 @@ public abstract class BaseSchema {
     public Boolean isValid(Object comparedValue) {
         Boolean result = true;
         for (String key : getConditions().keySet()) {
-            result = result && getConditions().get(key).compareTo(comparedValue);
+            result = result && getConditions().get(key).execute(comparedValue);
         }
         return result;
 
     }
     interface Condition {
-        Boolean compareTo(Object comparedValue);
+        Boolean execute(Object comparedValue);
     }
 
 }
