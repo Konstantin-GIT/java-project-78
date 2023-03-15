@@ -22,9 +22,6 @@ public class ValidatorShapeMapSchemaTest {
     }
     @Test
     public void testIsValidHuman1() {
-        Map<String, Object> human1 = new HashMap<>();
-        human1.put("name", "Kolya");
-        human1.put("age", 100);
         Boolean actual = schema.isValid(null);
         assertEquals(true, actual);
     }

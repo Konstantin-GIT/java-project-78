@@ -21,6 +21,12 @@ public class ValidatorNumberSchemaTest {
     }
 
     @Test
+    public void testIsValidNotNull() {
+        Boolean actual = schema.isValid(5);
+        assertEquals(true, actual);
+    }
+
+    @Test
     public void testIsValidRequiredNull() {
         Boolean actual = schema.required().isValid(null);
         assertEquals(false, actual);

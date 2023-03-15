@@ -33,7 +33,7 @@ public class NumberSchema extends BaseSchema {
 
     @Override
     public Condition getInitCondition() {
-        return (x) -> x == null;
+        return (item) -> item == null || item instanceof Number;
     }
 
     @Override

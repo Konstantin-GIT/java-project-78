@@ -27,26 +27,28 @@ public class MapSchema extends BaseSchema {
     }
 
     public Boolean isValid(Map<String, Object> data) {
-        if ((data instanceof Map)) {
-            for (String key: data.keySet()) {
-                Object checkedValue = data.get(key);
-                if (schemas.containsKey(key)) {
-                    BaseSchema currentSchema = schemas.get(key);
-                    Boolean currentCheckedStatus = currentSchema.isValid(checkedValue);
-                    if (!currentCheckedStatus) {
-                        return false;
-                    }
+        if (schemas.isEmpty() || data == null) {
+            return super.isValid(data);
+        }
+        for (String key: data.keySet()) {
+            Object checkedValue = data.get(key);
+            if (schemas.containsKey(key)) {
+                BaseSchema currentSchema = schemas.get(key);
+                Boolean currentCheckedStatus = currentSchema.isValid(checkedValue);
+                if (!currentCheckedStatus) {
+                    return false;
                 }
             }
-            return true;
         }
-        return super.isValid(data);
+        return true;
+
+
     }
 
 
     @Override
     public Condition getInitCondition() {
-        return (item) -> item == null;
+        return (item) -> item == null || ((Map) item).isEmpty();
     }
 
     @Override

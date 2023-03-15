@@ -11,8 +11,10 @@ public class ValidatorMapSchemaTest {
     MapSchema schema;
 
     @BeforeEach
+
     public void testBefore() {
-        this.schema = new MapSchema();
+        Validator v = new Validator();
+        this.schema = v.map();
     }
 
     @Test
@@ -22,16 +24,26 @@ public class ValidatorMapSchemaTest {
     }
 
     @Test
+    public void testIsValidNotNull() {
+        Boolean actual = schema.isValid(new HashMap());
+        assertEquals(true, actual);
+    }
+
+    @Test
     public void testIsValidRequiredNull() {
         Boolean actual = schema.required().isValid(null);
         assertEquals(false, actual);
     }
+
+
 
     @Test
     public void testIsValidRequiredMap1() {
         Boolean actual = schema.required().isValid(new HashMap());
         assertEquals(true, actual);
     }
+
+
 
     @Test
     public void testIsValidRequiredMap2() {
@@ -82,5 +94,12 @@ public class ValidatorMapSchemaTest {
         Boolean actual = schema.sizeof(2).required().isValid(data);
         assertEquals(false, actual);
     }
+
+    @Test
+    public void testIsValidRequiredSizeOfMap5() {
+        Boolean actual = schema.required().sizeof(2).isValid(new HashMap());
+        assertEquals(false, actual);
+    }
+
 
 }
