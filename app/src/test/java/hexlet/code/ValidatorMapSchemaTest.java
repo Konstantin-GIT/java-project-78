@@ -8,7 +8,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class ValidatorMapSchemaTest {
-    MapSchema schema;
+    private MapSchema schema;
 
     @BeforeEach
 
@@ -19,19 +19,19 @@ public final class ValidatorMapSchemaTest {
 
     @Test
     public void testIsValidNull() {
-        Boolean actual = schema.isValid(null);
+        Boolean actual = getSchema().isValid(null);
         assertEquals(true, actual);
     }
 
     @Test
     public void testIsValidNotNull() {
-        Boolean actual = schema.isValid(new HashMap());
+        Boolean actual = getSchema().isValid(new HashMap());
         assertEquals(true, actual);
     }
 
     @Test
     public void testIsValidRequiredNull() {
-        Boolean actual = schema.required().isValid(null);
+        Boolean actual = getSchema().required().isValid(null);
         assertEquals(false, actual);
     }
 
@@ -39,7 +39,7 @@ public final class ValidatorMapSchemaTest {
 
     @Test
     public void testIsValidRequiredMap1() {
-        Boolean actual = schema.required().isValid(new HashMap());
+        Boolean actual = getSchema().required().isValid(new HashMap());
         assertEquals(true, actual);
     }
 
@@ -49,13 +49,13 @@ public final class ValidatorMapSchemaTest {
     public void testIsValidRequiredMap2() {
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
-        Boolean actual = schema.required().isValid(data);
+        Boolean actual = getSchema().required().isValid(data);
         assertEquals(true, actual);
     }
 
     @Test
     public void testIsValidRequiredNotMap() {
-        Boolean actual = schema.required().isValid("testString");
+        Boolean actual = getSchema().required().isValid("testString");
         assertEquals(false, actual);
     }
 
@@ -63,7 +63,7 @@ public final class ValidatorMapSchemaTest {
     public void testIsValidSizeOfMap1() {
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
-        Boolean actual = schema.sizeof(2).isValid(data);
+        Boolean actual = getSchema().sizeof(2).isValid(data);
         assertEquals(false, actual);
     }
 
@@ -72,7 +72,7 @@ public final class ValidatorMapSchemaTest {
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
         data.put("key2", "value2");
-        Boolean actual = schema.sizeof(2).isValid(data);
+        Boolean actual = getSchema().sizeof(2).isValid(data);
         assertEquals(true, actual);
     }
 
@@ -81,7 +81,7 @@ public final class ValidatorMapSchemaTest {
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
         data.put("key2", "value2");
-        Boolean actual = schema.sizeof(2).required().isValid(data);
+        Boolean actual = getSchema().sizeof(2).required().isValid(data);
         assertEquals(true, actual);
     }
 
@@ -91,15 +91,18 @@ public final class ValidatorMapSchemaTest {
         data.put("key1", "value1");
         data.put("key2", "value2");
         data.put("key3", "value3");
-        Boolean actual = schema.sizeof(2).required().isValid(data);
+        Boolean actual = getSchema().sizeof(2).required().isValid(data);
         assertEquals(false, actual);
     }
 
     @Test
     public void testIsValidRequiredSizeOfMap5() {
-        Boolean actual = schema.required().sizeof(2).isValid(new HashMap());
+        Boolean actual = getSchema().required().sizeof(2).isValid(new HashMap());
         assertEquals(false, actual);
     }
 
 
+    public MapSchema getSchema() {
+        return schema;
+    }
 }

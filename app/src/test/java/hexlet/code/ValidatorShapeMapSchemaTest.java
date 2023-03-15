@@ -9,7 +9,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class ValidatorShapeMapSchemaTest {
-    MapSchema schema;
+    private MapSchema schema;
 
     @BeforeEach
     public void testBefore() {
@@ -22,7 +22,7 @@ public final class ValidatorShapeMapSchemaTest {
     }
     @Test
     public void testIsValidHuman1() {
-        Boolean actual = schema.isValid(null);
+        Boolean actual = getSchema().isValid(null);
         assertEquals(true, actual);
     }
     @Test
@@ -30,7 +30,7 @@ public final class ValidatorShapeMapSchemaTest {
         Map<String, Object> human2 = new HashMap<>();
         human2.put("name", "Maya");
         human2.put("age", null);
-        Boolean actual = schema.isValid(human2);
+        Boolean actual = getSchema().isValid(human2);
         assertEquals(true, actual);
     }
     @Test
@@ -38,7 +38,7 @@ public final class ValidatorShapeMapSchemaTest {
         Map<String, Object> human3 = new HashMap<>();
         human3.put("name", "");
         human3.put("age", null);
-        Boolean actual = schema.isValid(human3);
+        Boolean actual = getSchema().isValid(human3);
         assertEquals(false, actual);
     }
     @Test
@@ -46,7 +46,11 @@ public final class ValidatorShapeMapSchemaTest {
         Map<String, Object> human4 = new HashMap<>();
         human4.put("name", "Valya");
         human4.put("age", -5);
-        Boolean actual = schema.isValid(human4);
+        Boolean actual = getSchema().isValid(human4);
         assertEquals(false, actual);
+    }
+
+    public MapSchema getSchema() {
+        return schema;
     }
 }

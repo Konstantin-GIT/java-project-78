@@ -7,7 +7,7 @@ public abstract class BaseSchema {
 
     public abstract Map<String, Condition> getConditions();
 
-    public Boolean isValid(Object comparedValue) {
+    public final Boolean isValid(Object comparedValue) {
         Boolean result = true;
         for (String key : getConditions().keySet()) {
             result = result && getConditions().get(key).execute(comparedValue);
