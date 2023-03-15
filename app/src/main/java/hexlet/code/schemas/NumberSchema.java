@@ -3,7 +3,7 @@ package hexlet.code.schemas;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NumberSchema extends BaseSchema {
+public final class NumberSchema extends BaseSchema {
 
     private Map<String, Condition> conditions =
             new HashMap<String, Condition>() { { put("initCondition", getInitCondition()); } };

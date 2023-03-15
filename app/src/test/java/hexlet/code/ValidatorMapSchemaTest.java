@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ValidatorMapSchemaTest {
+public final class ValidatorMapSchemaTest {
     MapSchema schema;
 
     @BeforeEach
