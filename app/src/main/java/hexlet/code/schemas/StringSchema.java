@@ -24,7 +24,7 @@ public final class StringSchema extends BaseSchema {
     public StringSchema minLength(int minLength) {
         getConditions().remove("initCondition");
         getConditions().put("minLengthCondition",
-                (x) ->  x == null ? false : x instanceof String && x.toString().length() >= minLength);
+                (x) ->  x == null ? false : x.toString().length() >= minLength);
         return this;
     }
 
