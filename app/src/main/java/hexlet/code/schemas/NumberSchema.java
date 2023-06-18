@@ -1,8 +1,5 @@
 package hexlet.code.schemas;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public final class NumberSchema extends BaseSchema {
     public NumberSchema() {
         addCheck(
