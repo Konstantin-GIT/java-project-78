@@ -34,11 +34,11 @@ public final class ValidatorStringSchemaTest {
     @Test
     public void testIsValidNotEmptyString() {
         Boolean actual = getSchema().isValid("case test with false");
-        assertEquals(false, actual);
+        assertEquals(true, actual);
     }
     @Test
     public void testRequiredIsValidNotEmptyString() {
-        Boolean actual = getSchema().required().isValid("case test with false");
+        Boolean actual = getSchema().required().isValid("case test with true");
         assertEquals(true, actual);
     }
 

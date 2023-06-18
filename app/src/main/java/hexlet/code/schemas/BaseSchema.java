@@ -1,20 +1,31 @@
 package hexlet.code.schemas;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class BaseSchema {
-    public abstract Condition getInitCondition();
 
-    public abstract Map<String, Condition> getConditions();
 
-    public final Boolean isValid(Object comparedValue) {
+    //  Вставка из примера Ментора
+    protected Map<String, Condition> checks = new LinkedHashMap<>();
+    protected boolean required = false;
+
+    protected final void addCheck(String name, Condition validate) {
+        checks.put(name, validate);
+    }
+
+    //
+
+
+   public final Boolean isValid(Object comparedValue) {
         Boolean result = true;
-        for (String key : getConditions().keySet()) {
-            result = result && getConditions().get(key).execute(comparedValue);
+        for (String key : checks.keySet()) {
+            result = result && checks.get(key).execute(comparedValue);
         }
         return result;
 
     }
+
     interface Condition {
         Boolean execute(Object comparedValue);
     }

@@ -1,20 +1,35 @@
 package hexlet.code.schemas;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public final class NumberSchema extends BaseSchema {
-
-    private Map<String, Condition> conditions =
-            new HashMap<String, Condition>() { { put("initCondition", getInitCondition()); } };
-
-    public NumberSchema required() {
-        getConditions().remove("initCondition");
-        getConditions().put("requiredCondition", (item) ->
-                item == null ? false : (item instanceof Number) && ((Number) item).longValue() >= 0);
+    public NumberSchema() {
+        addCheck(
+                "required",
+                item -> item == null || item instanceof Number
+        );
+    }
+    public NumberSchema positive() {
+        addCheck("positiveCondition", (item) ->
+                item == null ? true : ((Number) item).longValue() > 0);
         return this;
     }
 
+    public NumberSchema range(int beginInterval, int endInterval) {
+        addCheck("rangeCondition", (item) ->
+                item == null ? false : ((Number) item).longValue() >= beginInterval
+                        && ((Number) item).longValue() <= endInterval);
+        return this;
+    }
+
+    public NumberSchema required() {
+
+        addCheck("requiredCondition", (item) ->
+                item == null ? false : (item instanceof Number) && ((Number) item).longValue() >= 0);
+        return this;
+    }
+/*
     public NumberSchema positive() {
         getConditions().remove("initCondition");
         getConditions().put("positiveCondition", (item) ->
@@ -29,14 +44,6 @@ public final class NumberSchema extends BaseSchema {
                         && ((Number) item).longValue() <= endInterval);
         return this;
     }
+*/
 
-    @Override
-    public Condition getInitCondition() {
-        return (item) -> item == null || item instanceof Number;
-    }
-
-    @Override
-    public Map<String, Condition> getConditions() {
-        return conditions;
-    }
 }

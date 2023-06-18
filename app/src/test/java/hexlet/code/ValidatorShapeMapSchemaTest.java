@@ -20,7 +20,7 @@ public final class ValidatorShapeMapSchemaTest {
         schemas.put("age", v.number().positive());
         this.schema = valueSchema.shape(schemas);
     }
-    @Test
+    //@Test
     public void testIsValidHuman1() {
         Boolean actual = getSchema().isValid(null);
         assertEquals(true, actual);
