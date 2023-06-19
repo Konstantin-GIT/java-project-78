@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class BaseSchema {
-
     protected Map<String, Condition> checks = new LinkedHashMap<>();
     protected boolean required = false;
     protected final void addCheck(String name, Condition validate) {
@@ -12,12 +11,11 @@ public abstract class BaseSchema {
     }
 
     public final Boolean isValid(Object comparedValue) {
-    Boolean result = true;
-    for (String key : checks.keySet()) {
-        result = result && checks.get(key).execute(comparedValue);
-    }
-    return result;
-
+        Boolean result = true;
+        for (String key : checks.keySet()) {
+            result = result && checks.get(key).execute(comparedValue);
+        }
+        return result;
     }
 
     interface Condition {
