@@ -22,8 +22,4 @@ public abstract class BaseSchema {
         return result;
     }
 
-    interface Predicate {
-        Boolean test(Object comparedValue);
-    }
-
 }
