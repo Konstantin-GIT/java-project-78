@@ -2,27 +2,28 @@ package hexlet.code.schemas;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.function.Predicate;
 
 public abstract class BaseSchema {
-    protected Map<String, Condition> checks = new LinkedHashMap<>();
+    protected Map<String, Predicate> checks = new LinkedHashMap<>();
     protected boolean required = false;
-    protected final void addCheck(String name, Condition validate) {
+    protected final void addCheck(String name, Predicate validate) {
         checks.put(name, validate);
     }
 
     public final Boolean isValid(Object comparedValue) {
-        if (comparedValue == null) {
-            return !required;
+        if (comparedValue == null && !required) {
+            return true;
         }
         Boolean result = true;
         for (String key : checks.keySet()) {
-            result = result && checks.get(key).execute(comparedValue);
+            result = result && checks.get(key).test(comparedValue);
         }
         return result;
     }
 
-    interface Condition {
-        Boolean execute(Object comparedValue);
+    interface Predicate {
+        Boolean test(Object comparedValue);
     }
 
 }
