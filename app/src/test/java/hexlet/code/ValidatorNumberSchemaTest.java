@@ -41,7 +41,7 @@ public final class ValidatorNumberSchemaTest {
     @Test
     public void testIsValidRequiredNotPositive() {
         Boolean actual = getSchema().required().isValid(-1);
-        assertEquals(false, actual);
+        assertEquals(true, actual);
     }
 
     @Test
@@ -65,7 +65,7 @@ public final class ValidatorNumberSchemaTest {
     @Test
     public void testIsValidRangeNull() {
         Boolean actual = getSchema().range(5, 10).isValid(null);
-        assertEquals(false, actual);
+        assertEquals(true, actual);
     }
 
     @Test

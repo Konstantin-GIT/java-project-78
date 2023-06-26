@@ -8,15 +8,12 @@ public final class MapSchema extends BaseSchema {
     public MapSchema() {
         addCheck(
                 "required",
-                (item) -> item == null || item instanceof Map
+                (item) -> item instanceof Map
         );
-
     }
 
-    private Map<String, BaseSchema> schemas = new HashMap<>();
-
     public MapSchema required() {
-        addCheck("requiredCondition", (item) -> item instanceof Map);
+        required = true;
         return this;
     }
 
@@ -38,23 +35,5 @@ public final class MapSchema extends BaseSchema {
         );
         return this;
     }
-
-    /*public Boolean isValid(Map<String, Object> data) {
-        if (schemas.isEmpty() || data == null) {
-            return super.isValid(data);
-        }
-        for (String key: data.keySet()) {
-            Object checkedValue = data.get(key);
-            if (schemas.containsKey(key)) {
-                BaseSchema currentSchema = schemas.get(key);
-                Boolean currentCheckedStatus = currentSchema.isValid(checkedValue);
-                if (!currentCheckedStatus) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }*/
-
 
 }

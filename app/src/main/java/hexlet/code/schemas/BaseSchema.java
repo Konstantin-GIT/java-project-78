@@ -11,6 +11,9 @@ public abstract class BaseSchema {
     }
 
     public final Boolean isValid(Object comparedValue) {
+        if (comparedValue == null) {
+            return !required;
+        }
         Boolean result = true;
         for (String key : checks.keySet()) {
             result = result && checks.get(key).execute(comparedValue);
