@@ -1,13 +1,10 @@
 package hexlet.code;
 
 import hexlet.code.schemas.MapSchema;
-import hexlet.code.schemas.NumberSchema;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class ValidatorMapSchemaTest {
 
