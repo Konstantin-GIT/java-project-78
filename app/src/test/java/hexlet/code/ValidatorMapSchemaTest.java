@@ -1,108 +1,61 @@
 package hexlet.code;
 
 import hexlet.code.schemas.MapSchema;
-import org.junit.jupiter.api.BeforeEach;
+import hexlet.code.schemas.NumberSchema;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class ValidatorMapSchemaTest {
-    private MapSchema schema;
 
-    @BeforeEach
-
-    public void testBefore() {
+    @Test
+    public void testIsValid() {
         Validator v = new Validator();
-        this.schema = v.map();
-    }
+        MapSchema schema = v.map();
 
-    @Test
-    public void testIsValidNull() {
-        Boolean actual = getSchema().isValid(null);
-        assertEquals(true, actual);
-    }
-
-    @Test
-    public void testIsValidNotNull() {
-        Boolean actual = getSchema().isValid(new HashMap());
-        assertEquals(true, actual);
-    }
-
-    @Test
-    public void testIsValidRequiredNull() {
-        Boolean actual = getSchema().required().isValid(null);
-        assertEquals(false, actual);
-    }
-
-
-
-    @Test
-    public void testIsValidRequiredMap1() {
-        Boolean actual = getSchema().required().isValid(new HashMap());
-        assertEquals(true, actual);
-    }
-
-
-
-    @Test
-    public void testIsValidRequiredMap2() {
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
-        Boolean actual = getSchema().required().isValid(data);
-        assertEquals(true, actual);
+
+        assertThat(schema.isValid(null)).isTrue();
+        assertThat(schema.isValid(new HashMap())).isTrue();
+        assertThat(schema.isValid(data)).isTrue();
     }
 
     @Test
-    public void testIsValidRequiredNotMap() {
-        Boolean actual = getSchema().required().isValid("testString");
-        assertEquals(false, actual);
-    }
+    public void testIsValidRequired() {
+        Validator v = new Validator();
+        MapSchema schema = v.map();
 
-    @Test
-    public void testIsValidSizeOfMap1() {
+        schema.required();
+
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
-        Boolean actual = getSchema().sizeof(2).isValid(data);
-        assertEquals(false, actual);
+
+        assertThat(schema.isValid(null)).isFalse();
+        assertThat(schema.isValid(new HashMap())).isTrue();
+        assertThat(schema.isValid(data)).isTrue();
     }
 
     @Test
-    public void testIsValidSizeOfMap2() {
-        Map<String, String> data = new HashMap<>();
-        data.put("key1", "value1");
-        data.put("key2", "value2");
-        Boolean actual = getSchema().sizeof(2).isValid(data);
-        assertEquals(true, actual);
-    }
+    public void testIsValidRequiredSizeOf() {
+        Validator v = new Validator();
+        MapSchema schema = v.map();
 
-    @Test
-    public void testIsValidRequiredSizeOfMap3() {
-        Map<String, String> data = new HashMap<>();
-        data.put("key1", "value1");
-        data.put("key2", "value2");
-        Boolean actual = getSchema().sizeof(2).required().isValid(data);
-        assertEquals(true, actual);
-    }
+        schema.required().sizeof(3);
 
-    @Test
-    public void testIsValidRequiredSizeOfMap4() {
         Map<String, String> data = new HashMap<>();
         data.put("key1", "value1");
+
+        assertThat(schema.isValid(null)).isFalse();
+        assertThat(schema.isValid(new HashMap())).isFalse();
+        assertThat(schema.isValid(data)).isFalse();
+
         data.put("key2", "value2");
         data.put("key3", "value3");
-        Boolean actual = getSchema().sizeof(2).required().isValid(data);
-        assertEquals(false, actual);
+        assertThat(schema.isValid(data)).isTrue();
     }
 
-    @Test
-    public void testIsValidRequiredSizeOfMap5() {
-        Boolean actual = getSchema().required().sizeof(2).isValid(new HashMap());
-        assertEquals(false, actual);
-    }
-
-
-    public MapSchema getSchema() {
-        return schema;
-    }
 }

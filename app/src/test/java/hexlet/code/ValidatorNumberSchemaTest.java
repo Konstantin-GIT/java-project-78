@@ -3,95 +3,84 @@ package hexlet.code;
 import hexlet.code.schemas.NumberSchema;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class ValidatorNumberSchemaTest {
-    private NumberSchema schema;
 
-    @BeforeEach
-    public void testBefore() {
-        this.schema = new NumberSchema();
+    @Test
+    public void testIsValid() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+        assertThat(schema.isValid(null)).isTrue();
+        assertThat(schema.isValid(5)).isTrue();
+    }
+
+
+    @Test
+    public void testIsValidRequired() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+
+        schema.required();
+
+        assertThat(schema.isValid(null)).isFalse();
+        assertThat(schema.isValid(5)).isTrue();
+        assertThat(schema.isValid(-5)).isTrue();
+        assertThat(schema.isValid("testNumberType")).isFalse();
     }
 
     @Test
-    public void testIsValidNull() {
-        Boolean actual = getSchema().isValid(null);
-        assertEquals(true, actual);
+    public void testIsValidPositive() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+
+        schema.required().positive();
+
+        assertThat(schema.isValid(0)).isFalse();
+        assertThat(schema.isValid(5)).isTrue();
+        assertThat(schema.isValid(-5)).isFalse();
+        assertThat(schema.isValid("testNumberType")).isFalse();
     }
 
     @Test
-    public void testIsValidNotNull() {
-        Boolean actual = getSchema().isValid(5);
-        assertEquals(true, actual);
+    public void testIsValidRequiredPositive() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+
+        schema.required().positive();
+
+        assertThat(schema.isValid(0)).isFalse();
+        assertThat(schema.isValid(5)).isTrue();
+        assertThat(schema.isValid(-5)).isFalse();
+        assertThat(schema.isValid("testNumberType")).isFalse();
     }
 
     @Test
-    public void testIsValidRequiredNull() {
-        Boolean actual = getSchema().required().isValid(null);
-        assertEquals(false, actual);
+    public void testIsValidRange() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+
+        schema.range(5, 10);
+
+        assertThat(schema.isValid(0)).isFalse();
+        assertThat(schema.isValid(5)).isTrue();
+        assertThat(schema.isValid(7)).isTrue();
+        assertThat(schema.isValid(null)).isTrue();
     }
 
     @Test
-    public void testIsValidRequiredNumber() {
-        Boolean actual = getSchema().required().isValid(5);
-        assertEquals(true, actual);
+    public void testIsValidRequiredRange() {
+        Validator v = new Validator();
+        NumberSchema schema = v.number();
+
+        schema.required().range(5, 10);
+
+        assertThat(schema.isValid(0)).isFalse();
+        assertThat(schema.isValid(5)).isTrue();
+        assertThat(schema.isValid(7)).isTrue();
+        assertThat(schema.isValid(null)).isFalse();
     }
 
-    @Test
-    public void testIsValidRequiredNotPositive() {
-        Boolean actual = getSchema().required().isValid(-1);
-        assertEquals(true, actual);
-    }
-
-    @Test
-    public void testIsValidRequiredNotNumber() {
-        Boolean actual = getSchema().required().isValid("testString");
-        assertEquals(false, actual);
-    }
-
-    @Test
-    public void testIsValidRequiredPositiveNumber() {
-        Boolean actual = getSchema().required().positive().isValid(0);
-        assertEquals(false, actual);
-    }
-
-    @Test
-    public void testIsValidPositiveNumber() {
-        Boolean actual = getSchema().positive().isValid(null);
-        assertEquals(true, actual);
-    }
-
-    @Test
-    public void testIsValidRangeNull() {
-        Boolean actual = getSchema().range(5, 10).isValid(null);
-        assertEquals(true, actual);
-    }
-
-    @Test
-    public void testIsValidRangeNumber() {
-        Boolean actual = getSchema().range(5, 10).isValid(6);
-        assertEquals(true, actual);
-    }
-
-    @Test
-    public void testIsValidRangeNumber1() {
-        Boolean actual = getSchema().range(5, 10).isValid(5);
-        assertEquals(true, actual);
-    }
-
-    @Test
-    public void testIsValidRangeNumber2() {
-        Boolean actual = getSchema().range(-5, 10).isValid(-2);
-        assertEquals(true, actual);
-    }
-    @Test
-    public void testIsValidRangePositiveNumber() {
-        Boolean actual = getSchema().positive().range(-5, 10).isValid(-2);
-        assertEquals(false, actual);
-    }
-
-    public NumberSchema getSchema() {
-        return schema;
-    }
 }

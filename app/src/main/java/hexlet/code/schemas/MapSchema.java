@@ -5,14 +5,14 @@ import java.util.Map;
 public final class MapSchema extends BaseSchema {
 
     public MapSchema() {
+        super();
+    }
+
+    public MapSchema required() {
         addCheck(
                 "required",
                 (item) -> item instanceof Map
         );
-    }
-
-    public MapSchema required() {
-        required = true;
         return this;
     }
 
