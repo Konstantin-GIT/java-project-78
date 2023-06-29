@@ -6,13 +6,14 @@ public final class NumberSchema extends BaseSchema {
     }
     public NumberSchema positive() {
         addCheck("positiveCondition", (item) -> item == null
-                || ((Number) item).longValue() > 0);
+                || item instanceof Integer && ((Number) item).longValue() > 0);
         return this;
     }
 
     public NumberSchema range(int beginInterval, int endInterval) {
         addCheck("rangeCondition", (item) -> item == null
-                || ((Number) item).longValue() >= beginInterval
+                || item instanceof Integer
+                && ((Number) item).longValue() >= beginInterval
                 && ((Number) item).longValue() <= endInterval);
         return this;
     }

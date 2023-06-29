@@ -65,6 +65,7 @@ public final class ValidatorNumberSchemaTest {
         assertThat(schema.isValid(5)).isTrue();
         assertThat(schema.isValid(7)).isTrue();
         assertThat(schema.isValid(null)).isTrue();
+        assertThat(schema.isValid("testType")).isFalse();
     }
 
     @Test
@@ -78,6 +79,7 @@ public final class ValidatorNumberSchemaTest {
         assertThat(schema.isValid(5)).isTrue();
         assertThat(schema.isValid(7)).isTrue();
         assertThat(schema.isValid(null)).isFalse();
+        assertThat(schema.isValid("testType")).isFalse();
     }
 
 }
